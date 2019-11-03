@@ -415,6 +415,8 @@ function _M.export_keying_material(length, label, context)
     local rc = ngx_lua_ffi_ssl_export_keying_material(r, outbuf, length,
         label, #label, ctx, ctx_len, use_context, errmsg)
 
+    ffi.C.free(ctx)
+
     if rc == FFI_OK then
         return ffi_str(outbuf, length)
     end
